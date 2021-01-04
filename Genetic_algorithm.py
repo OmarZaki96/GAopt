@@ -18,6 +18,51 @@ class GA():
     def __init__(self,function, dimension, variable_type='bool', variable_type_mixed=None,
                  variable_boundaries=None, function_timeout=5000, 
                  algorithm_parameters=None):
+        '''
+        This is the call of the class with the parameters of the genetic 
+        algorithm
+
+        Parameters
+        ----------
+        function : Function
+            The callable fitness function used to evaluate the parameters.
+        dimension : int
+            number of parameters of the problem.
+        variable_type : str, optional
+            The variables types. it can be either 'bool', 'int' or 'real'; 
+            'int' represent discrete integer variables while 'real' represent 
+            continuous real variables. This however will be not be used if 
+            variable_type_mixed is set to a value. The default is 'bool'.
+        variable_type_mixed : numpy array, optional
+            A numpy array of strings with length equal to the dimension, 
+            defining each variable type either 'bool', 'int' or 'real'.
+            The default is None which means it will not be used.
+        variable_boundaries : numpy array
+            a numpy array of length equal to the dimension. each element
+            consists of a list of 2 elements [min,max]. The default is None
+            which will raise an error.
+        function_timeout : float, optional
+            maximum time in seconds for fitness function evaluation.
+            The default is 5000.
+        algorithm_parameters : dictionary
+            A dictionary of algorithm additional parameters
+            'population_size': int, size of population
+            'mutation_probability': float, probability of mutation
+            'elit_ratio': float, ratio of elite children which will be taken
+            'crossover_probability': float, probability of cross-over
+            'parents_portion': float, parents portion of the population size
+            'crossover_type': str, can be either 'uniform', 'one_point', or 
+                                'two_point'
+            'max_iteration_without_improv': int or None
+            'Population_file_path': str, path for population file save
+            'Number_of_processes': int or 'max'
+            
+
+        Returns
+        -------
+        object of the class.
+
+        '''
         #############################################################
         # input function
         assert (callable(function)),"function must be callable"     
@@ -167,7 +212,14 @@ class GA():
         
         #############################################################
     def run(self):
-    
+        '''
+        Used to run the genetic algorithm for the first time
+
+        Returns
+        -------
+        None.
+
+        '''
         ############################################################# 
         # Initial Population
         self.integers=np.where(self.var_type=='int')
@@ -374,6 +426,19 @@ class GA():
         ##############################################################################         
 
     def resume(self,Pop_file_path):
+        '''
+        Used to resume an already existing population file
+
+        Parameters
+        ----------
+        Pop_file_path : str
+            path to the population file.
+
+        Returns
+        -------
+        None.
+
+        '''
         # make sure the file exist
         pop = []
         assert(os.path.exists(Pop_file_path)),"Population file doesn't exist"
