@@ -6,6 +6,8 @@ The package has the ability for parallel processing and resuming.
 
 # example of implementation
 ```python
+import numpy as np
+from GAopt import GA
 def objective(X):
     X1 = X[0]
     X2 = X[1]
